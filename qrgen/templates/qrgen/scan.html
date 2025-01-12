@@ -1,0 +1,107 @@
+{% extends "core/base.html" %}
+{% block content %}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(120deg, #84fab0, #8fd3f4);
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    #scanqr {
+        text-align: center;
+        margin-top: 50px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+        font-size: 2em;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+        color: #555;
+        margin-bottom: 5px;
+        display: block;
+        text-align: left;
+    }
+
+    input[type="number"],
+    input[type="file"] {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 1em;
+    }
+
+    button {
+        padding: 12px 30px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    h1 {
+        font-size: 1.5em;
+        color: #4CAF50;
+        margin-top: 20px;
+    }
+
+    #qr_image {
+        margin-top: 10px;
+    }
+
+    /* Responsive Design */
+    @media screen and (max-width: 768px) {
+        input[type="number"],
+        input[type="file"],
+        button {
+            width: 100%;
+        }
+
+        #scanqr {
+            padding: 15px;
+        }
+    }
+</style>
+
+<!-- Scan QR Section -->
+<div id="scanqr" class="container">
+    <h2>Scan Your QR Code</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="num">Enter the number:</label>
+        <input type="number" name="number" id="num" placeholder="Enter a number" required><br>
+        
+        <label for="qr_image">Upload QR Code Image:</label><br>
+        <input type="file" id="qr_image" name="qr_image" accept="image/*" required><br>
+
+        <button type="submit">Scan QR Code</button>
+    </form>
+    {% if result %}
+    <h1>{{ result }}</h1>
+    {% endif %}
+</div>
+
+{% endblock content %}
